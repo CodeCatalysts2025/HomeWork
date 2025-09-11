@@ -1,45 +1,60 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Search, Clock, Users, Star, Zap, BookOpen, Search as Teach } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Search,
+  Clock,
+  Users,
+  Star,
+  Zap,
+  BookOpen,
+  Search as Teach,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Quest {
-  id: string
-  title: string
-  description: string
-  subject: string
-  difficulty: "Beginner" | "Intermediate" | "Advanced"
-  xpReward: number
-  duration: string
+  id: string;
+  title: string;
+  description: string;
+  subject: string;
+  difficulty: "Beginner" | "Intermediate" | "Advanced";
+  xpReward: number;
+  duration: string;
   teacher?: {
-    name: string
-    avatar: string
-    rating: number
-  }
-  studentsEnrolled?: number
-  type: "learn" | "teach"
-  status: "available" | "in-progress" | "completed"
+    name: string;
+    avatar: string;
+    rating: number;
+  };
+  studentsEnrolled?: number;
+  type: "learn" | "teach";
+  status: "available" | "in-progress" | "completed";
 }
 
 export function QuestBoard() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [selectedSubject, setSelectedSubject] = useState("all")
-  const [selectedDifficulty, setSelectedDifficulty] = useState("all")
-  const [activeTab, setActiveTab] = useState("available")
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("all");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("all");
+  const [activeTab, setActiveTab] = useState("available");
 
   const quests: Quest[] = [
     {
       id: "1",
       title: "Master React Hooks",
-      description: "Learn the fundamentals of useState, useEffect, and custom hooks",
+      description:
+        "Learn the fundamentals of useState, useEffect, and custom hooks",
       subject: "Programming",
       difficulty: "Intermediate",
       xpReward: 150,
@@ -92,39 +107,48 @@ export function QuestBoard() {
       type: "teach",
       status: "in-progress",
     },
-  ]
+  ];
 
-  const subjects = ["all", "Programming", "Mathematics", "Science", "Design", "Languages"]
-  const difficulties = ["all", "Beginner", "Intermediate", "Advanced"]
+  const subjects = [
+    "all",
+    "Programming",
+    "Mathematics",
+    "Science",
+    "Design",
+    "Languages",
+  ];
+  const difficulties = ["all", "Beginner", "Intermediate", "Advanced"];
 
   const filteredQuests = quests.filter((quest) => {
     const matchesSearch =
       quest.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      quest.description.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesSubject = selectedSubject === "all" || quest.subject === selectedSubject
-    const matchesDifficulty = selectedDifficulty === "all" || quest.difficulty === selectedDifficulty
+      quest.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSubject =
+      selectedSubject === "all" || quest.subject === selectedSubject;
+    const matchesDifficulty =
+      selectedDifficulty === "all" || quest.difficulty === selectedDifficulty;
     const matchesTab =
       activeTab === "available"
         ? quest.status === "available"
         : activeTab === "in-progress"
-          ? quest.status === "in-progress"
-          : quest.status === "completed"
+        ? quest.status === "in-progress"
+        : quest.status === "completed";
 
-    return matchesSearch && matchesSubject && matchesDifficulty && matchesTab
-  })
+    return matchesSearch && matchesSubject && matchesDifficulty && matchesTab;
+  });
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case "Beginner":
-        return "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400"
+        return "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400";
       case "Intermediate":
-        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400"
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400";
       case "Advanced":
-        return "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400"
+        return "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400";
       default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400"
+        return "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400";
     }
-  }
+  };
 
   return (
     <Card>
@@ -160,7 +184,10 @@ export function QuestBoard() {
               </SelectContent>
             </Select>
 
-            <Select value={selectedDifficulty} onValueChange={setSelectedDifficulty}>
+            <Select
+              value={selectedDifficulty}
+              onValueChange={setSelectedDifficulty}
+            >
               <SelectTrigger className="w-full sm:w-40">
                 <SelectValue placeholder="Difficulty" />
               </SelectTrigger>
@@ -177,16 +204,23 @@ export function QuestBoard() {
       </CardHeader>
 
       <CardContent>
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="space-y-4"
+        >
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="available">
-              Available ({quests.filter((q) => q.status === "available").length})
+              Available ({quests.filter((q) => q.status === "available").length}
+              )
             </TabsTrigger>
             <TabsTrigger value="in-progress">
-              In Progress ({quests.filter((q) => q.status === "in-progress").length})
+              In Progress (
+              {quests.filter((q) => q.status === "in-progress").length})
             </TabsTrigger>
             <TabsTrigger value="completed">
-              Completed ({quests.filter((q) => q.status === "completed").length})
+              Completed ({quests.filter((q) => q.status === "completed").length}
+              )
             </TabsTrigger>
           </TabsList>
 
@@ -195,12 +229,17 @@ export function QuestBoard() {
               <div className="text-center py-12">
                 <BookOpen className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-lg font-semibold mb-2">No quests found</h3>
-                <p className="text-muted-foreground">Try adjusting your filters or search terms</p>
+                <p className="text-muted-foreground">
+                  Try adjusting your filters or search terms
+                </p>
               </div>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {filteredQuests.map((quest) => (
-                  <Card key={quest.id} className="hover:shadow-md transition-shadow cursor-pointer group">
+                  <Card
+                    key={quest.id}
+                    className="hover:shadow-md transition-shadow cursor-pointer group"
+                  >
                     <CardContent className="p-6">
                       <div className="space-y-4">
                         {/* Quest Header */}
@@ -212,7 +251,7 @@ export function QuestBoard() {
                                   "w-6 h-6 rounded-full flex items-center justify-center",
                                   quest.type === "learn"
                                     ? "bg-blue-100 dark:bg-blue-900/20"
-                                    : "bg-purple-100 dark:bg-purple-900/20",
+                                    : "bg-purple-100 dark:bg-purple-900/20"
                                 )}
                               >
                                 {quest.type === "learn" ? (
@@ -223,7 +262,11 @@ export function QuestBoard() {
                               </div>
                               <Badge
                                 variant="outline"
-                                className={quest.type === "learn" ? "text-blue-600" : "text-purple-600"}
+                                className={
+                                  quest.type === "learn"
+                                    ? "text-blue-600"
+                                    : "text-purple-600"
+                                }
                               >
                                 {quest.type === "learn" ? "Learn" : "Teach"}
                               </Badge>
@@ -231,14 +274,20 @@ export function QuestBoard() {
                             <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">
                               {quest.title}
                             </h3>
-                            <p className="text-sm text-muted-foreground mt-1">{quest.description}</p>
+                            <p className="text-sm text-muted-foreground mt-1">
+                              {quest.description}
+                            </p>
                           </div>
                         </div>
 
                         {/* Quest Details */}
                         <div className="flex flex-wrap items-center gap-2">
                           <Badge variant="secondary">{quest.subject}</Badge>
-                          <Badge className={getDifficultyColor(quest.difficulty)}>{quest.difficulty}</Badge>
+                          <Badge
+                            className={getDifficultyColor(quest.difficulty)}
+                          >
+                            {quest.difficulty}
+                          </Badge>
                           <div className="flex items-center gap-1 text-sm text-muted-foreground">
                             <Clock className="w-4 h-4" />
                             {quest.duration}
@@ -249,7 +298,10 @@ export function QuestBoard() {
                         {quest.teacher && (
                           <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
                             <Avatar className="w-8 h-8">
-                              <AvatarImage src={quest.teacher.avatar || "/placeholder.svg"} alt={quest.teacher.name} />
+                              <AvatarImage
+                                src={quest.teacher.avatar || "/placeholder.svg"}
+                                alt={quest.teacher.name}
+                              />
                               <AvatarFallback className="text-xs">
                                 {quest.teacher.name
                                   .split(" ")
@@ -258,16 +310,22 @@ export function QuestBoard() {
                               </AvatarFallback>
                             </Avatar>
                             <div className="flex-1">
-                              <p className="text-sm font-medium">{quest.teacher.name}</p>
+                              <p className="text-sm font-medium">
+                                {quest.teacher.name}
+                              </p>
                               <div className="flex items-center gap-2">
                                 <div className="flex items-center gap-1">
                                   <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                                  <span className="text-xs">{quest.teacher.rating}</span>
+                                  <span className="text-xs">
+                                    {quest.teacher.rating}
+                                  </span>
                                 </div>
                                 {quest.studentsEnrolled && (
                                   <div className="flex items-center gap-1">
                                     <Users className="w-3 h-3 text-muted-foreground" />
-                                    <span className="text-xs text-muted-foreground">{quest.studentsEnrolled}</span>
+                                    <span className="text-xs text-muted-foreground">
+                                      {quest.studentsEnrolled}
+                                    </span>
                                   </div>
                                 )}
                               </div>
@@ -279,7 +337,9 @@ export function QuestBoard() {
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <Zap className="w-4 h-4 text-yellow-500" />
-                            <span className="font-semibold text-yellow-600">+{quest.xpReward} XP</span>
+                            <span className="font-semibold text-yellow-600">
+                              +{quest.xpReward} XP
+                            </span>
                           </div>
 
                           <Button
@@ -288,19 +348,19 @@ export function QuestBoard() {
                               quest.status === "in-progress"
                                 ? "bg-orange-600 hover:bg-orange-700"
                                 : quest.status === "completed"
-                                  ? "bg-green-600 hover:bg-green-700"
-                                  : quest.type === "learn"
-                                    ? "bg-blue-600 hover:bg-blue-700"
-                                    : "bg-purple-600 hover:bg-purple-700",
+                                ? "bg-green-600 hover:bg-green-700"
+                                : quest.type === "learn"
+                                ? "bg-blue-600 hover:bg-blue-700"
+                                : "bg-purple-600 hover:bg-purple-700"
                             )}
                           >
                             {quest.status === "in-progress"
                               ? "Continue"
                               : quest.status === "completed"
-                                ? "Review"
-                                : quest.type === "learn"
-                                  ? "Start Learning"
-                                  : "Start Teaching"}
+                              ? "Review"
+                              : quest.type === "learn"
+                              ? "Start Learning"
+                              : "Start Teaching"}
                           </Button>
                         </div>
                       </div>
@@ -313,5 +373,5 @@ export function QuestBoard() {
         </Tabs>
       </CardContent>
     </Card>
-  )
+  );
 }

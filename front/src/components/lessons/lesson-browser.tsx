@@ -1,45 +1,61 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Progress } from "@/components/ui/progress"
-import { Search, BookOpen, Clock, Users, Star, Play, CheckCircle, Lock } from "lucide-react"
+import { useState } from "react";
+import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Progress } from "@/components/ui/progress";
+import {
+  Search,
+  BookOpen,
+  Clock,
+  Users,
+  Star,
+  Play,
+  CheckCircle,
+  Lock,
+} from "lucide-react";
 
 interface Lesson {
-  id: string
-  title: string
-  description: string
-  subject: string
-  difficulty: "Beginner" | "Intermediate" | "Advanced"
-  duration: string
+  id: string;
+  title: string;
+  description: string;
+  subject: string;
+  difficulty: "Beginner" | "Intermediate" | "Advanced";
+  duration: string;
   teacher: {
-    name: string
-    avatar: string
-    rating: number
-  }
-  studentsEnrolled: number
-  progress?: number
-  status: "not-started" | "in-progress" | "completed" | "locked"
-  xpReward: number
-  prerequisites?: string[]
+    name: string;
+    avatar: string;
+    rating: number;
+  };
+  studentsEnrolled: number;
+  progress?: number;
+  status: "not-started" | "in-progress" | "completed" | "locked";
+  xpReward: number;
+  prerequisites?: string[];
 }
 
 export function LessonBrowser() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [selectedSubject, setSelectedSubject] = useState("all")
-  const [selectedStatus, setSelectedStatus] = useState("all")
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("all");
+  const [selectedStatus, setSelectedStatus] = useState("all");
 
   const lessons: Lesson[] = [
     {
       id: "1",
       title: "JavaScript Fundamentals",
-      description: "Learn the basics of JavaScript programming including variables, functions, and control structures",
+      description:
+        "Learn the basics of JavaScript programming including variables, functions, and control structures",
       subject: "Programming",
       difficulty: "Beginner",
       duration: "45 min",
@@ -56,7 +72,8 @@ export function LessonBrowser() {
     {
       id: "2",
       title: "React Hooks Deep Dive",
-      description: "Master useState, useEffect, useContext and custom hooks with practical examples",
+      description:
+        "Master useState, useEffect, useContext and custom hooks with practical examples",
       subject: "Programming",
       difficulty: "Intermediate",
       duration: "60 min",
@@ -72,7 +89,8 @@ export function LessonBrowser() {
     {
       id: "3",
       title: "Advanced CSS Grid",
-      description: "Create complex layouts with CSS Grid and learn advanced positioning techniques",
+      description:
+        "Create complex layouts with CSS Grid and learn advanced positioning techniques",
       subject: "Design",
       difficulty: "Advanced",
       duration: "50 min",
@@ -88,7 +106,8 @@ export function LessonBrowser() {
     {
       id: "4",
       title: "Node.js Backend Development",
-      description: "Build scalable backend applications with Node.js, Express, and databases",
+      description:
+        "Build scalable backend applications with Node.js, Express, and databases",
       subject: "Programming",
       difficulty: "Advanced",
       duration: "90 min",
@@ -102,46 +121,55 @@ export function LessonBrowser() {
       xpReward: 200,
       prerequisites: ["JavaScript Fundamentals", "React Hooks Deep Dive"],
     },
-  ]
+  ];
 
-  const subjects = ["all", "Programming", "Mathematics", "Science", "Design", "Languages"]
-  const statuses = ["all", "not-started", "in-progress", "completed"]
+  const subjects = [
+    "all",
+    "Programming",
+    "Mathematics",
+    "Science",
+    "Design",
+    "Languages",
+  ];
+  const statuses = ["all", "not-started", "in-progress", "completed"];
 
   const filteredLessons = lessons.filter((lesson) => {
     const matchesSearch =
       lesson.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      lesson.description.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesSubject = selectedSubject === "all" || lesson.subject === selectedSubject
-    const matchesStatus = selectedStatus === "all" || lesson.status === selectedStatus
+      lesson.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSubject =
+      selectedSubject === "all" || lesson.subject === selectedSubject;
+    const matchesStatus =
+      selectedStatus === "all" || lesson.status === selectedStatus;
 
-    return matchesSearch && matchesSubject && matchesStatus
-  })
+    return matchesSearch && matchesSubject && matchesStatus;
+  });
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case "Beginner":
-        return "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400"
+        return "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400";
       case "Intermediate":
-        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400"
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400";
       case "Advanced":
-        return "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400"
+        return "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400";
       default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400"
+        return "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400";
     }
-  }
+  };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "completed":
-        return <CheckCircle className="w-5 h-5 text-green-500" />
+        return <CheckCircle className="w-5 h-5 text-green-500" />;
       case "in-progress":
-        return <Play className="w-5 h-5 text-blue-500" />
+        return <Play className="w-5 h-5 text-blue-500" />;
       case "locked":
-        return <Lock className="w-5 h-5 text-muted-foreground" />
+        return <Lock className="w-5 h-5 text-muted-foreground" />;
       default:
-        return <BookOpen className="w-5 h-5 text-muted-foreground" />
+        return <BookOpen className="w-5 h-5 text-muted-foreground" />;
     }
-  }
+  };
 
   return (
     <div className="space-y-6">
@@ -149,7 +177,9 @@ export function LessonBrowser() {
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Lessons</h1>
-          <p className="text-muted-foreground">Explore and learn from our comprehensive lesson library</p>
+          <p className="text-muted-foreground">
+            Explore and learn from our comprehensive lesson library
+          </p>
         </div>
 
         <Button className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90">
@@ -194,10 +224,10 @@ export function LessonBrowser() {
                     {status === "all"
                       ? "All Status"
                       : status === "not-started"
-                        ? "Not Started"
-                        : status === "in-progress"
-                          ? "In Progress"
-                          : "Completed"}
+                      ? "Not Started"
+                      : status === "in-progress"
+                      ? "In Progress"
+                      : "Completed"}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -209,18 +239,27 @@ export function LessonBrowser() {
       {/* Lessons Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
         {filteredLessons.map((lesson) => (
-          <Card key={lesson.id} className="hover:shadow-lg transition-all duration-200 group">
+          <Card
+            key={lesson.id}
+            className="hover:shadow-lg transition-all duration-200 group"
+          >
             <CardHeader className="pb-3">
               <div className="flex items-start justify-between mb-2">
                 <div className="flex items-center gap-2">
                   {getStatusIcon(lesson.status)}
-                  <Badge className={getDifficultyColor(lesson.difficulty)}>{lesson.difficulty}</Badge>
+                  <Badge className={getDifficultyColor(lesson.difficulty)}>
+                    {lesson.difficulty}
+                  </Badge>
                 </div>
                 <Badge variant="secondary">{lesson.subject}</Badge>
               </div>
 
-              <CardTitle className="text-lg group-hover:text-primary transition-colors">{lesson.title}</CardTitle>
-              <p className="text-sm text-muted-foreground leading-relaxed">{lesson.description}</p>
+              <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                {lesson.title}
+              </CardTitle>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {lesson.description}
+              </p>
             </CardHeader>
 
             <CardContent className="space-y-4">
@@ -238,10 +277,15 @@ export function LessonBrowser() {
               {/* Prerequisites (for locked lessons) */}
               {lesson.status === "locked" && lesson.prerequisites && (
                 <div className="space-y-2">
-                  <p className="text-sm font-medium text-muted-foreground">Prerequisites:</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Prerequisites:
+                  </p>
                   <div className="space-y-1">
                     {lesson.prerequisites.map((prereq) => (
-                      <div key={prereq} className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <div
+                        key={prereq}
+                        className="flex items-center gap-2 text-xs text-muted-foreground"
+                      >
                         <Lock className="w-3 h-3" />
                         {prereq}
                       </div>
@@ -253,7 +297,10 @@ export function LessonBrowser() {
               {/* Teacher Info */}
               <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
                 <Avatar className="w-10 h-10">
-                  <AvatarImage src={lesson.teacher.avatar || "/placeholder.svg"} alt={lesson.teacher.name} />
+                  <AvatarImage
+                    src={lesson.teacher.avatar || "/placeholder.svg"}
+                    alt={lesson.teacher.name}
+                  />
                   <AvatarFallback className="text-sm">
                     {lesson.teacher.name
                       .split(" ")
@@ -284,7 +331,9 @@ export function LessonBrowser() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Star className="w-4 h-4 text-yellow-500" />
-                  <span className="font-semibold text-yellow-600">+{lesson.xpReward} XP</span>
+                  <span className="font-semibold text-yellow-600">
+                    +{lesson.xpReward} XP
+                  </span>
                 </div>
 
                 {lesson.status === "locked" ? (
@@ -300,15 +349,15 @@ export function LessonBrowser() {
                         lesson.status === "completed"
                           ? "bg-green-600 hover:bg-green-700"
                           : lesson.status === "in-progress"
-                            ? "bg-blue-600 hover:bg-blue-700"
-                            : "bg-primary hover:bg-primary/90"
+                          ? "bg-blue-600 hover:bg-blue-700"
+                          : "bg-primary hover:bg-primary/90"
                       }
                     >
                       {lesson.status === "completed"
                         ? "Review"
                         : lesson.status === "in-progress"
-                          ? "Continue"
-                          : "Start Lesson"}
+                        ? "Continue"
+                        : "Start Lesson"}
                     </Button>
                   </Link>
                 )}
@@ -322,9 +371,11 @@ export function LessonBrowser() {
         <div className="text-center py-12">
           <BookOpen className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
           <h3 className="text-xl font-semibold mb-2">No lessons found</h3>
-          <p className="text-muted-foreground">Try adjusting your search or filter criteria</p>
+          <p className="text-muted-foreground">
+            Try adjusting your search or filter criteria
+          </p>
         </div>
       )}
     </div>
-  )
+  );
 }

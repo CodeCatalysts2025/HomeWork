@@ -1,15 +1,18 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Navigation } from "@/components/navigation"
-import { PeerFeedbackForm, FeedbackSummary } from "@/components/feedback/peer-feedback"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { MessageCircle, Star, Award } from "lucide-react"
+import { useState } from "react";
+import { Navigation } from "@/components/navigation";
+import {
+  PeerFeedbackForm,
+  FeedbackSummary,
+} from "@/components/feedback/peer-feedback";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MessageCircle, Star, Award } from "lucide-react";
 
 export default function FeedbackPage() {
-  const [showFeedbackForm, setShowFeedbackForm] = useState(false)
+  const [showFeedbackForm, setShowFeedbackForm] = useState(false);
 
   // Mock feedback data
   const mockFeedbacks = [
@@ -20,7 +23,8 @@ export default function FeedbackPage() {
       rating: 5,
       helpfulness: 5,
       clarity: 4,
-      comment: "Amazing lesson! Really helped me understand React hooks better.",
+      comment:
+        "Amazing lesson! Really helped me understand React hooks better.",
       emoji: "😍",
       date: new Date("2024-01-15"),
     },
@@ -31,7 +35,8 @@ export default function FeedbackPage() {
       rating: 4,
       helpfulness: 4,
       clarity: 5,
-      comment: "Clear explanations and good examples. Would love more practice exercises.",
+      comment:
+        "Clear explanations and good examples. Would love more practice exercises.",
       emoji: "😊",
       date: new Date("2024-01-14"),
     },
@@ -42,17 +47,18 @@ export default function FeedbackPage() {
       rating: 5,
       helpfulness: 5,
       clarity: 5,
-      comment: "Perfect lesson! The step-by-step approach made everything easy to follow.",
+      comment:
+        "Perfect lesson! The step-by-step approach made everything easy to follow.",
       emoji: "😍",
       date: new Date("2024-01-13"),
     },
-  ]
+  ];
 
   const handleFeedbackSubmit = (feedback: any) => {
-    console.log("Feedback submitted:", feedback)
-    setShowFeedbackForm(false)
+    console.log("Feedback submitted:", feedback);
+    setShowFeedbackForm(false);
     // In real app, this would send to API
-  }
+  };
 
   if (showFeedbackForm) {
     return (
@@ -73,7 +79,7 @@ export default function FeedbackPage() {
           </div>
         </main>
       </div>
-    )
+    );
   }
 
   return (
@@ -86,11 +92,18 @@ export default function FeedbackPage() {
             {/* Header */}
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
               <div>
-                <h1 className="text-3xl font-bold text-foreground">Peer Feedback</h1>
-                <p className="text-muted-foreground">Give and receive feedback to improve learning experiences</p>
+                <h1 className="text-3xl font-bold text-foreground">
+                  Peer Feedback
+                </h1>
+                <p className="text-muted-foreground">
+                  Give and receive feedback to improve learning experiences
+                </p>
               </div>
 
-              <Button onClick={() => setShowFeedbackForm(true)} className="flex items-center gap-2">
+              <Button
+                onClick={() => setShowFeedbackForm(true)}
+                className="flex items-center gap-2"
+              >
                 <MessageCircle className="w-4 h-4" />
                 Give Feedback
               </Button>
@@ -98,7 +111,10 @@ export default function FeedbackPage() {
 
             <Tabs defaultValue="received" className="space-y-6">
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="received" className="flex items-center gap-2">
+                <TabsTrigger
+                  value="received"
+                  className="flex items-center gap-2"
+                >
                   <Star className="w-4 h-4" />
                   Feedback Received
                 </TabsTrigger>
@@ -109,7 +125,10 @@ export default function FeedbackPage() {
               </TabsList>
 
               <TabsContent value="received" className="space-y-6">
-                <FeedbackSummary teacherId="current-user" feedbacks={mockFeedbacks} />
+                <FeedbackSummary
+                  teacherId="current-user"
+                  feedbacks={mockFeedbacks}
+                />
               </TabsContent>
 
               <TabsContent value="given" className="space-y-6">
@@ -141,8 +160,12 @@ export default function FeedbackPage() {
                           className="flex items-center justify-between p-3 border border-border rounded-lg"
                         >
                           <div>
-                            <p className="font-semibold text-sm">{item.lesson}</p>
-                            <p className="text-xs text-muted-foreground">by {item.teacher}</p>
+                            <p className="font-semibold text-sm">
+                              {item.lesson}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              by {item.teacher}
+                            </p>
                           </div>
                           <div className="text-right">
                             <div className="flex items-center gap-1">
@@ -150,12 +173,16 @@ export default function FeedbackPage() {
                                 <Star
                                   key={star}
                                   className={`w-3 h-3 ${
-                                    star <= item.rating ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground"
+                                    star <= item.rating
+                                      ? "fill-yellow-400 text-yellow-400"
+                                      : "text-muted-foreground"
                                   }`}
                                 />
                               ))}
                             </div>
-                            <p className="text-xs text-muted-foreground">{item.date}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {item.date}
+                            </p>
                           </div>
                         </div>
                       ))}
@@ -168,5 +195,5 @@ export default function FeedbackPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

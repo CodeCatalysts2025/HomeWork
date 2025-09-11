@@ -1,32 +1,42 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Trophy, Medal, Award, Crown, Star, TrendingUp, Users, BookOpen, Calendar } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Trophy,
+  Medal,
+  Award,
+  Crown,
+  Star,
+  TrendingUp,
+  Users,
+  BookOpen,
+  Calendar,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface LeaderboardUser {
-  id: string
-  name: string
-  avatar: string
-  level: number
-  xp: number
-  weeklyXP: number
-  monthlyXP: number
-  lessonsCompleted: number
-  lessonsTaught: number
-  rating: number
-  badges: number
-  streak: number
-  rank: number
-  previousRank?: number
+  id: string;
+  name: string;
+  avatar: string;
+  level: number;
+  xp: number;
+  weeklyXP: number;
+  monthlyXP: number;
+  lessonsCompleted: number;
+  lessonsTaught: number;
+  rating: number;
+  badges: number;
+  streak: number;
+  rank: number;
+  previousRank?: number;
 }
 
 export function LeaderboardTabs() {
-  const [selectedPeriod, setSelectedPeriod] = useState("all-time")
+  const [selectedPeriod, setSelectedPeriod] = useState("all-time");
 
   // Mock leaderboard data
   const users: LeaderboardUser[] = [
@@ -110,52 +120,52 @@ export function LeaderboardTabs() {
       rank: 5,
       previousRank: 4,
     },
-  ]
+  ];
 
   const getRankIcon = (rank: number) => {
     switch (rank) {
       case 1:
-        return <Crown className="w-6 h-6 text-yellow-500" />
+        return <Crown className="w-6 h-6 text-yellow-500" />;
       case 2:
-        return <Medal className="w-6 h-6 text-gray-400" />
+        return <Medal className="w-6 h-6 text-gray-400" />;
       case 3:
-        return <Award className="w-6 h-6 text-amber-600" />
+        return <Award className="w-6 h-6 text-amber-600" />;
       default:
         return (
           <span className="w-6 h-6 flex items-center justify-center text-sm font-bold text-muted-foreground">
             #{rank}
           </span>
-        )
+        );
     }
-  }
+  };
 
   const getRankChange = (user: LeaderboardUser) => {
-    if (!user.previousRank) return null
-    const change = user.previousRank - user.rank
+    if (!user.previousRank) return null;
+    const change = user.previousRank - user.rank;
     if (change > 0) {
-      return <TrendingUp className="w-4 h-4 text-green-500" />
+      return <TrendingUp className="w-4 h-4 text-green-500" />;
     } else if (change < 0) {
-      return <TrendingUp className="w-4 h-4 text-red-500 rotate-180" />
+      return <TrendingUp className="w-4 h-4 text-red-500 rotate-180" />;
     }
-    return <div className="w-4 h-4 bg-muted rounded-full" />
-  }
+    return <div className="w-4 h-4 bg-muted rounded-full" />;
+  };
 
   const getXPForPeriod = (user: LeaderboardUser, period: string) => {
     switch (period) {
       case "weekly":
-        return user.weeklyXP
+        return user.weeklyXP;
       case "monthly":
-        return user.monthlyXP
+        return user.monthlyXP;
       default:
-        return user.xp
+        return user.xp;
     }
-  }
+  };
 
   const sortedUsers = [...users].sort((a, b) => {
-    const aXP = getXPForPeriod(a, selectedPeriod)
-    const bXP = getXPForPeriod(b, selectedPeriod)
-    return bXP - aXP
-  })
+    const aXP = getXPForPeriod(a, selectedPeriod);
+    const bXP = getXPForPeriod(b, selectedPeriod);
+    return bXP - aXP;
+  });
 
   return (
     <div className="space-y-6">
@@ -163,7 +173,9 @@ export function LeaderboardTabs() {
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Leaderboard</h1>
-          <p className="text-muted-foreground">See how you rank against other learners</p>
+          <p className="text-muted-foreground">
+            See how you rank against other learners
+          </p>
         </div>
 
         <div className="flex items-center gap-2">
@@ -172,7 +184,11 @@ export function LeaderboardTabs() {
         </div>
       </div>
 
-      <Tabs value={selectedPeriod} onValueChange={setSelectedPeriod} className="space-y-6">
+      <Tabs
+        value={selectedPeriod}
+        onValueChange={setSelectedPeriod}
+        className="space-y-6"
+      >
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="all-time">All Time</TabsTrigger>
           <TabsTrigger value="monthly">This Month</TabsTrigger>
@@ -192,7 +208,10 @@ export function LeaderboardTabs() {
                         <span className="text-white font-bold">2</span>
                       </div>
                       <Avatar className="w-16 h-16 border-4 border-gray-300 absolute -top-8 left-0">
-                        <AvatarImage src={sortedUsers[1].avatar || "/placeholder.svg"} alt={sortedUsers[1].name} />
+                        <AvatarImage
+                          src={sortedUsers[1].avatar || "/placeholder.svg"}
+                          alt={sortedUsers[1].name}
+                        />
                         <AvatarFallback>
                           {sortedUsers[1].name
                             .split(" ")
@@ -201,9 +220,15 @@ export function LeaderboardTabs() {
                         </AvatarFallback>
                       </Avatar>
                     </div>
-                    <p className="font-semibold text-sm">{sortedUsers[1].name}</p>
+                    <p className="font-semibold text-sm">
+                      {sortedUsers[1].name}
+                    </p>
                     <p className="text-xs text-muted-foreground">
-                      {getXPForPeriod(sortedUsers[1], selectedPeriod).toLocaleString()} XP
+                      {getXPForPeriod(
+                        sortedUsers[1],
+                        selectedPeriod
+                      ).toLocaleString()}{" "}
+                      XP
                     </p>
                   </div>
                 )}
@@ -216,7 +241,10 @@ export function LeaderboardTabs() {
                         <Crown className="w-6 h-6 text-white" />
                       </div>
                       <Avatar className="w-20 h-20 border-4 border-yellow-400 absolute -top-10 left-0 right-0 mx-auto">
-                        <AvatarImage src={sortedUsers[0].avatar || "/placeholder.svg"} alt={sortedUsers[0].name} />
+                        <AvatarImage
+                          src={sortedUsers[0].avatar || "/placeholder.svg"}
+                          alt={sortedUsers[0].name}
+                        />
                         <AvatarFallback>
                           {sortedUsers[0].name
                             .split(" ")
@@ -227,7 +255,11 @@ export function LeaderboardTabs() {
                     </div>
                     <p className="font-bold text-lg">{sortedUsers[0].name}</p>
                     <p className="text-sm text-muted-foreground">
-                      {getXPForPeriod(sortedUsers[0], selectedPeriod).toLocaleString()} XP
+                      {getXPForPeriod(
+                        sortedUsers[0],
+                        selectedPeriod
+                      ).toLocaleString()}{" "}
+                      XP
                     </p>
                   </div>
                 )}
@@ -240,7 +272,10 @@ export function LeaderboardTabs() {
                         <span className="text-white font-bold">3</span>
                       </div>
                       <Avatar className="w-16 h-16 border-4 border-amber-600 absolute -top-8 left-0">
-                        <AvatarImage src={sortedUsers[2].avatar || "/placeholder.svg"} alt={sortedUsers[2].name} />
+                        <AvatarImage
+                          src={sortedUsers[2].avatar || "/placeholder.svg"}
+                          alt={sortedUsers[2].name}
+                        />
                         <AvatarFallback>
                           {sortedUsers[2].name
                             .split(" ")
@@ -249,9 +284,15 @@ export function LeaderboardTabs() {
                         </AvatarFallback>
                       </Avatar>
                     </div>
-                    <p className="font-semibold text-sm">{sortedUsers[2].name}</p>
+                    <p className="font-semibold text-sm">
+                      {sortedUsers[2].name}
+                    </p>
                     <p className="text-xs text-muted-foreground">
-                      {getXPForPeriod(sortedUsers[2], selectedPeriod).toLocaleString()} XP
+                      {getXPForPeriod(
+                        sortedUsers[2],
+                        selectedPeriod
+                      ).toLocaleString()}{" "}
+                      XP
                     </p>
                   </div>
                 )}
@@ -276,7 +317,7 @@ export function LeaderboardTabs() {
                       "flex items-center gap-4 p-4 rounded-lg border transition-colors hover:bg-muted/50",
                       index < 3 &&
                         "bg-gradient-to-r from-yellow-50/50 to-orange-50/50 dark:from-yellow-950/10 dark:to-orange-950/10",
-                      user.id === "2" && "ring-2 ring-primary/20 bg-primary/5", // Highlight current user
+                      user.id === "2" && "ring-2 ring-primary/20 bg-primary/5" // Highlight current user
                     )}
                   >
                     {/* Rank */}
@@ -287,7 +328,10 @@ export function LeaderboardTabs() {
 
                     {/* Avatar */}
                     <Avatar className="w-12 h-12">
-                      <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
+                      <AvatarImage
+                        src={user.avatar || "/placeholder.svg"}
+                        alt={user.name}
+                      />
                       <AvatarFallback>
                         {user.name
                           .split(" ")
@@ -321,7 +365,9 @@ export function LeaderboardTabs() {
 
                     {/* Stats */}
                     <div className="text-right">
-                      <p className="font-bold text-lg">{getXPForPeriod(user, selectedPeriod).toLocaleString()}</p>
+                      <p className="font-bold text-lg">
+                        {getXPForPeriod(user, selectedPeriod).toLocaleString()}
+                      </p>
                       <p className="text-xs text-muted-foreground">XP</p>
                     </div>
                   </div>
@@ -347,8 +393,12 @@ export function LeaderboardTabs() {
                 <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center mx-auto mb-3">
                   <BookOpen className="w-6 h-6 text-green-600" />
                 </div>
-                <p className="text-2xl font-bold">{users.reduce((sum, user) => sum + user.lessonsCompleted, 0)}</p>
-                <p className="text-sm text-muted-foreground">Lessons Completed</p>
+                <p className="text-2xl font-bold">
+                  {users.reduce((sum, user) => sum + user.lessonsCompleted, 0)}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Lessons Completed
+                </p>
               </CardContent>
             </Card>
 
@@ -358,11 +408,18 @@ export function LeaderboardTabs() {
                   <Trophy className="w-6 h-6 text-purple-600" />
                 </div>
                 <p className="text-2xl font-bold">
-                  {Math.max(...users.map((user) => getXPForPeriod(user, selectedPeriod))).toLocaleString()}
+                  {Math.max(
+                    ...users.map((user) => getXPForPeriod(user, selectedPeriod))
+                  ).toLocaleString()}
                 </p>
                 <p className="text-sm text-muted-foreground">
                   Highest{" "}
-                  {selectedPeriod === "all-time" ? "Total" : selectedPeriod === "monthly" ? "Monthly" : "Weekly"} XP
+                  {selectedPeriod === "all-time"
+                    ? "Total"
+                    : selectedPeriod === "monthly"
+                    ? "Monthly"
+                    : "Weekly"}{" "}
+                  XP
                 </p>
               </CardContent>
             </Card>
@@ -370,5 +427,5 @@ export function LeaderboardTabs() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

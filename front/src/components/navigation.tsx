@@ -41,7 +41,7 @@ export function Navigation() {
     level: 12,
     xp: 2450,
     xpToNext: 3000,
-    avatar: "/teen-avatar.png",
+    avatar: null, // Will use fallback avatar
   };
 
   const xpProgress = (user.xp / user.xpToNext) * 100;
