@@ -56,7 +56,7 @@ export function LessonInterface({ lessonId }: LessonInterfaceProps) {
     duration: "45 min",
     teacher: {
       name: "Sarah Kim",
-      avatar: "/teacher-avatar-1.png",
+      avatar: null,
       rating: 4.9,
     },
     studentsEnrolled: 234,
