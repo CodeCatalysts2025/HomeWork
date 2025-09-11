@@ -1,14 +1,25 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
-import { Home, BookOpen, Trophy, Users, Settings, Star, Zap, Menu, X, MessageCircle } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import {
+  Home,
+  BookOpen,
+  Trophy,
+  Users,
+  Settings,
+  Star,
+  Zap,
+  Menu,
+  X,
+  MessageCircle,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const navigationItems = [
   { href: "/", icon: Home, label: "Dashboard" },
@@ -18,11 +29,11 @@ const navigationItems = [
   { href: "/quiz", icon: Star, label: "Career Quiz" },
   { href: "/xp", icon: Zap, label: "XP & Rewards" },
   { href: "/feedback", icon: MessageCircle, label: "Feedback" },
-]
+];
 
 export function Navigation() {
-  const pathname = usePathname()
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const pathname = usePathname();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Mock user data - in real app this would come from context/state
   const user = {
@@ -31,9 +42,9 @@ export function Navigation() {
     xp: 2450,
     xpToNext: 3000,
     avatar: "/teen-avatar.png",
-  }
+  };
 
-  const xpProgress = (user.xp / user.xpToNext) * 100
+  const xpProgress = (user.xp / user.xpToNext) * 100;
 
   return (
     <>
@@ -50,13 +61,24 @@ export function Navigation() {
 
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <Badge variant="secondary" className="bg-accent/20 text-accent-foreground">
+            <Badge
+              variant="secondary"
+              className="bg-accent/20 text-accent-foreground"
+            >
               Lv. {user.level}
             </Badge>
             <div className="text-sm font-medium">{user.xp} XP</div>
           </div>
-          <Button variant="ghost" size="sm" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? (
+              <X className="w-5 h-5" />
+            ) : (
+              <Menu className="w-5 h-5" />
+            )}
           </Button>
         </div>
       </header>
@@ -67,7 +89,11 @@ export function Navigation() {
           <div className="fixed inset-y-0 right-0 w-64 bg-card border-l border-border p-4">
             <div className="flex items-center justify-between mb-6">
               <span className="font-bold text-lg text-primary">Menu</span>
-              <Button variant="ghost" size="sm" onClick={() => setIsMobileMenuOpen(false)}>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
                 <X className="w-5 h-5" />
               </Button>
             </div>
@@ -82,7 +108,7 @@ export function Navigation() {
                     "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
                     pathname === item.href
                       ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted",
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
                   )}
                 >
                   <item.icon className="w-5 h-5" />
@@ -110,19 +136,27 @@ export function Navigation() {
           {/* User Profile Card */}
           <div className="p-4 border-b border-border">
             <div className="flex items-center gap-3 mb-3">
-              <Avatar className="w-12 h-12 border-2 border-primary/20">
-                <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
-                <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                  {user.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")}
-                </AvatarFallback>
-              </Avatar>
+              <Link href="/profile">
+                <Avatar className="w-12 h-12 border-2 border-primary/20">
+                  <AvatarImage
+                    src={user.avatar || "/placeholder.svg"}
+                    alt={user.name}
+                  />
+                  <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                    {user.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
+                  </AvatarFallback>
+                </Avatar>
+              </Link>
               <div className="flex-1 min-w-0">
                 <p className="font-semibold text-sm truncate">{user.name}</p>
                 <div className="flex items-center gap-2">
-                  <Badge variant="secondary" className="bg-accent/20 text-accent-foreground text-xs">
+                  <Badge
+                    variant="secondary"
+                    className="bg-accent/20 text-accent-foreground text-xs"
+                  >
                     Level {user.level}
                   </Badge>
                 </div>
@@ -148,7 +182,7 @@ export function Navigation() {
                   "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
                   pathname === item.href
                     ? "bg-primary text-primary-foreground shadow-sm"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted",
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
                 )}
               >
                 <item.icon className="w-5 h-5" />
@@ -179,15 +213,22 @@ export function Navigation() {
               href={item.href}
               className={cn(
                 "flex flex-col items-center gap-1 px-3 py-2 rounded-lg text-xs font-medium transition-colors min-w-0",
-                pathname === item.href ? "text-primary" : "text-muted-foreground",
+                pathname === item.href
+                  ? "text-primary"
+                  : "text-muted-foreground"
               )}
             >
-              <item.icon className={cn("w-5 h-5", pathname === item.href && "text-primary")} />
+              <item.icon
+                className={cn(
+                  "w-5 h-5",
+                  pathname === item.href && "text-primary"
+                )}
+              />
               <span className="truncate">{item.label}</span>
             </Link>
           ))}
         </div>
       </nav>
     </>
-  )
+  );
 }
