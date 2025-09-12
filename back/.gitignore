@@ -14,4 +14,3 @@ build/
 # Environment files
 .envls
 .vercel
-.env
