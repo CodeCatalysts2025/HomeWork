@@ -9,4 +9,4 @@ const badgeLearned = new mongoose.Schema({
   users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 });
 
-export default mongoose.model("BadgeTaught", badgeLearned);
+export default mongoose.model("BadgeLearned", badgeLearned);
