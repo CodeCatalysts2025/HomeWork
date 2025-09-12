@@ -1,14 +1,23 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const lessonSchema = new mongoose.Schema({
-  title: String,
-  subject: String,
-  difficulty: { type: Number, min: 1, max: 5 },
-  xpReward: Number,
-  teacher: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  learners: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  quizzes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Quiz' }],
-  createdAt: { type: Date, default: Date.now }
+  title: { type: String, required: true },
+  subject: { type: String, required: true },
+  difficulty: { type: Number, min: 1, max: 5, default: 1 },
+  xpReward: { type: Number, default: 50 },
+
+  teacher: { type: mongoose.Schema.Types.ObjectId, ref: "Teacher", required: true },
+
+  learners: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  quizzes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Quiz" }],
+
+  status: {
+    type: String,
+    enum: ["pending_approval", "approved", "rejected"],
+    default: "pending_approval",
+  },
+
+  createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model('Lesson', lessonSchema);
+export default mongoose.model("Lesson", lessonSchema);
