@@ -5,6 +5,7 @@ export { default as Quiz } from "./quiz.model";
 export { default as CareerQuizResult } from "./career-quiz.schema";
 export { default as Lesson } from "./lesson.model";
 export { default as Feedback } from "./feedback.schema";
+<<<<<<< Updated upstream
 
 
 
@@ -17,3 +18,6 @@ export { default as Feedback } from "./feedback.schema";
 
 
 export * from "./Badge-Model";
+=======
+export { Message } from "./message-model";
+>>>>>>> Stashed changes

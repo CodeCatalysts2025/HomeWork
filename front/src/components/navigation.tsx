@@ -14,6 +14,7 @@ const navigationItems = [
   { href: "/", icon: Home, label: "Dashboard" },
   { href: "/lessons", icon: BookOpen, label: "Lessons" },
   { href: "/leaderboard", icon: Trophy, label: "Leaderboard" },
+  { href: "/chat", icon: MessageCircle, label: "Chat" },
   { href: "/profile", icon: Users, label: "Profile" },
   { href: "/quiz", icon: Star, label: "Career Quiz" },
   { href: "/xp", icon: Zap, label: "XP & Rewards" },
