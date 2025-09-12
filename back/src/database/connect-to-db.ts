@@ -1,10 +1,12 @@
 import { connect } from "mongoose";
 
 export const connectToDataBase = async () => {
+  const mongoUrl = process.env.MONGO_URL;
+  if (!mongoUrl) {
+    throw new Error("MONGO_URL environment variable is not defined");
+  }
   try {
-    await connect(
-      "mongodb+srv://codecatalysts2025_db_user:CodeC%40t%40lysts2025@cluster0.zqrxblc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-    );
+    await connect(mongoUrl);
     console.log("✅ Connected to MongoDB database");
   } catch (error) {
     console.error("❌ MongoDB connection error:", error);
