@@ -1,14 +1,20 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Settings,
   Users,
@@ -24,28 +30,28 @@ import {
   Edit,
   Plus,
   Download,
-} from "lucide-react"
+} from "lucide-react";
 
 interface User {
-  id: string
-  name: string
-  email: string
-  level: number
-  xp: number
-  joinDate: Date
-  status: "active" | "suspended" | "pending"
-  lessonsCompleted: number
-  lessonsTaught: number
+  id: string;
+  name: string;
+  email: string;
+  level: number;
+  xp: number;
+  joinDate: Date;
+  status: "active" | "suspended" | "pending";
+  lessonsCompleted: number;
+  lessonsTaught: number;
 }
 
 interface FlaggedLesson {
-  id: string
-  title: string
-  teacher: string
-  reportedBy: string
-  reason: string
-  status: "pending" | "reviewed" | "approved" | "rejected"
-  reportDate: Date
+  id: string;
+  title: string;
+  teacher: string;
+  reportedBy: string;
+  reason: string;
+  status: "pending" | "reviewed" | "approved" | "rejected";
+  reportDate: Date;
 }
 
 const mockUsers: User[] = [
@@ -82,7 +88,7 @@ const mockUsers: User[] = [
     lessonsCompleted: 1,
     lessonsTaught: 0,
   },
-]
+];
 
 const mockFlaggedLessons: FlaggedLesson[] = [
   {
@@ -103,37 +109,44 @@ const mockFlaggedLessons: FlaggedLesson[] = [
     status: "reviewed",
     reportDate: new Date("2024-02-10"),
   },
-]
+];
 
-export function AdminDashboard() {
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
-  const [xpAdjustment, setXpAdjustment] = useState({ userId: "", amount: "", reason: "" })
-  const [showXpModal, setShowXpModal] = useState(false)
+export default function AdminDashboard() {
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [xpAdjustment, setXpAdjustment] = useState({
+    userId: "",
+    amount: "",
+    reason: "",
+  });
+  const [showXpModal, setShowXpModal] = useState(false);
 
   const handleXpAdjustment = () => {
     // Simulate XP adjustment
-    console.log("XP Adjustment:", xpAdjustment)
-    setShowXpModal(false)
-    setXpAdjustment({ userId: "", amount: "", reason: "" })
-  }
+    console.log("XP Adjustment:", xpAdjustment);
+    setShowXpModal(false);
+    setXpAdjustment({ userId: "", amount: "", reason: "" });
+  };
 
-  const handleLessonAction = (lessonId: string, action: "approve" | "reject") => {
+  const handleLessonAction = (
+    lessonId: string,
+    action: "approve" | "reject"
+  ) => {
     // Simulate lesson moderation action
-    console.log(`Lesson ${lessonId} ${action}ed`)
-  }
+    console.log(`Lesson ${lessonId} ${action}ed`);
+  };
 
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "active":
-        return <Badge className="bg-chart-3 text-white">Active</Badge>
+        return <Badge className="bg-chart-3 text-white">Active</Badge>;
       case "suspended":
-        return <Badge className="bg-destructive text-white">Suspended</Badge>
+        return <Badge className="bg-destructive text-white">Suspended</Badge>;
       case "pending":
-        return <Badge className="bg-secondary text-white">Pending</Badge>
+        return <Badge className="bg-secondary text-white">Pending</Badge>;
       default:
-        return <Badge variant="outline">{status}</Badge>
+        return <Badge variant="outline">{status}</Badge>;
     }
-  }
+  };
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
@@ -149,7 +162,9 @@ export function AdminDashboard() {
                 <Label>User</Label>
                 <Select
                   value={xpAdjustment.userId}
-                  onValueChange={(value) => setXpAdjustment((prev) => ({ ...prev, userId: value }))}
+                  onValueChange={(value) =>
+                    setXpAdjustment((prev) => ({ ...prev, userId: value }))
+                  }
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select user" />
@@ -170,7 +185,12 @@ export function AdminDashboard() {
                   type="number"
                   placeholder="e.g., 100 or -50"
                   value={xpAdjustment.amount}
-                  onChange={(e) => setXpAdjustment((prev) => ({ ...prev, amount: e.target.value }))}
+                  onChange={(e) =>
+                    setXpAdjustment((prev) => ({
+                      ...prev,
+                      amount: e.target.value,
+                    }))
+                  }
                 />
               </div>
 
@@ -179,7 +199,12 @@ export function AdminDashboard() {
                 <Textarea
                   placeholder="Explain the reason for this adjustment..."
                   value={xpAdjustment.reason}
-                  onChange={(e) => setXpAdjustment((prev) => ({ ...prev, reason: e.target.value }))}
+                  onChange={(e) =>
+                    setXpAdjustment((prev) => ({
+                      ...prev,
+                      reason: e.target.value,
+                    }))
+                  }
                 />
               </div>
 
@@ -189,7 +214,11 @@ export function AdminDashboard() {
                 </Button>
                 <Button
                   onClick={handleXpAdjustment}
-                  disabled={!xpAdjustment.userId || !xpAdjustment.amount || !xpAdjustment.reason}
+                  disabled={
+                    !xpAdjustment.userId ||
+                    !xpAdjustment.amount ||
+                    !xpAdjustment.reason
+                  }
                   className="bg-gradient-to-r from-primary to-primary/80"
                 >
                   Apply Adjustment
@@ -206,7 +235,9 @@ export function AdminDashboard() {
           <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Admin Dashboard
           </h1>
-          <p className="text-muted-foreground">Manage users, moderate content, and oversee platform operations</p>
+          <p className="text-muted-foreground">
+            Manage users, moderate content, and oversee platform operations
+          </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" className="bg-transparent">
@@ -231,7 +262,9 @@ export function AdminDashboard() {
               </div>
               <Users className="w-8 h-8 text-primary" />
             </div>
-            <div className="text-xs text-chart-3 mt-2">+12% from last month</div>
+            <div className="text-xs text-chart-3 mt-2">
+              +12% from last month
+            </div>
           </CardContent>
         </Card>
 
@@ -240,7 +273,9 @@ export function AdminDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-2xl font-bold text-secondary">3,456</div>
-                <div className="text-sm text-muted-foreground">Active Lessons</div>
+                <div className="text-sm text-muted-foreground">
+                  Active Lessons
+                </div>
               </div>
               <BookOpen className="w-8 h-8 text-secondary" />
             </div>
@@ -253,7 +288,9 @@ export function AdminDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-2xl font-bold text-chart-1">23</div>
-                <div className="text-sm text-muted-foreground">Flagged Content</div>
+                <div className="text-sm text-muted-foreground">
+                  Flagged Content
+                </div>
               </div>
               <Flag className="w-8 h-8 text-chart-1" />
             </div>
@@ -266,7 +303,9 @@ export function AdminDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-2xl font-bold text-chart-3">94.2%</div>
-                <div className="text-sm text-muted-foreground">Platform Health</div>
+                <div className="text-sm text-muted-foreground">
+                  Platform Health
+                </div>
               </div>
               <TrendingUp className="w-8 h-8 text-chart-3" />
             </div>
@@ -313,21 +352,30 @@ export function AdminDashboard() {
 
                 <div className="space-y-3">
                   {mockUsers.map((user) => (
-                    <div key={user.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+                    <div
+                      key={user.id}
+                      className="flex items-center justify-between p-4 bg-muted/50 rounded-lg"
+                    >
                       <div className="flex items-center gap-4">
                         <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold">
                           {user.name.charAt(0)}
                         </div>
                         <div>
                           <div className="font-semibold">{user.name}</div>
-                          <div className="text-sm text-muted-foreground">{user.email}</div>
+                          <div className="text-sm text-muted-foreground">
+                            {user.email}
+                          </div>
                         </div>
                       </div>
 
                       <div className="flex items-center gap-4">
                         <div className="text-right">
-                          <div className="font-semibold">Level {user.level}</div>
-                          <div className="text-sm text-muted-foreground">{user.xp.toLocaleString()} XP</div>
+                          <div className="font-semibold">
+                            Level {user.level}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            {user.xp.toLocaleString()} XP
+                          </div>
                         </div>
                         {getStatusBadge(user.status)}
                         <div className="flex gap-2">
@@ -338,7 +386,11 @@ export function AdminDashboard() {
                             <Edit className="w-4 h-4" />
                           </Button>
                           {user.status === "active" && (
-                            <Button variant="outline" size="sm" className="text-destructive bg-transparent">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="text-destructive bg-transparent"
+                            >
                               <Shield className="w-4 h-4" />
                             </Button>
                           )}
@@ -384,21 +436,31 @@ export function AdminDashboard() {
                   <div className="flex items-center justify-between p-3 bg-muted/50 rounded">
                     <div>
                       <div className="font-medium">Emma Chen</div>
-                      <div className="text-sm text-muted-foreground">Bonus for exceptional teaching</div>
+                      <div className="text-sm text-muted-foreground">
+                        Bonus for exceptional teaching
+                      </div>
                     </div>
                     <div className="text-right">
                       <div className="font-semibold text-chart-3">+500 XP</div>
-                      <div className="text-xs text-muted-foreground">2 hours ago</div>
+                      <div className="text-xs text-muted-foreground">
+                        2 hours ago
+                      </div>
                     </div>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-muted/50 rounded">
                     <div>
                       <div className="font-medium">Alex Rodriguez</div>
-                      <div className="text-sm text-muted-foreground">Correction for duplicate completion</div>
+                      <div className="text-sm text-muted-foreground">
+                        Correction for duplicate completion
+                      </div>
                     </div>
                     <div className="text-right">
-                      <div className="font-semibold text-destructive">-150 XP</div>
-                      <div className="text-xs text-muted-foreground">1 day ago</div>
+                      <div className="font-semibold text-destructive">
+                        -150 XP
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        1 day ago
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -407,15 +469,21 @@ export function AdminDashboard() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t">
                 <Card className="p-4 text-center">
                   <div className="text-2xl font-bold text-primary">2.4M</div>
-                  <div className="text-sm text-muted-foreground">Total XP Awarded</div>
+                  <div className="text-sm text-muted-foreground">
+                    Total XP Awarded
+                  </div>
                 </Card>
                 <Card className="p-4 text-center">
                   <div className="text-2xl font-bold text-secondary">156</div>
-                  <div className="text-sm text-muted-foreground">Manual Adjustments</div>
+                  <div className="text-sm text-muted-foreground">
+                    Manual Adjustments
+                  </div>
                 </Card>
                 <Card className="p-4 text-center">
                   <div className="text-2xl font-bold text-chart-1">1,947</div>
-                  <div className="text-sm text-muted-foreground">Average XP/User</div>
+                  <div className="text-sm text-muted-foreground">
+                    Average XP/User
+                  </div>
                 </Card>
               </div>
             </CardContent>
@@ -434,15 +502,28 @@ export function AdminDashboard() {
             <CardContent className="space-y-4">
               <div className="space-y-3">
                 {mockFlaggedLessons.map((lesson) => (
-                  <div key={lesson.id} className="p-4 border rounded-lg space-y-3">
+                  <div
+                    key={lesson.id}
+                    className="p-4 border rounded-lg space-y-3"
+                  >
                     <div className="flex justify-between items-start">
                       <div>
                         <h4 className="font-semibold">{lesson.title}</h4>
-                        <p className="text-sm text-muted-foreground">Teacher: {lesson.teacher}</p>
+                        <p className="text-sm text-muted-foreground">
+                          Teacher: {lesson.teacher}
+                        </p>
                       </div>
                       <Badge
-                        variant={lesson.status === "pending" ? "destructive" : "outline"}
-                        className={lesson.status === "pending" ? "bg-chart-1 text-white" : ""}
+                        variant={
+                          lesson.status === "pending"
+                            ? "destructive"
+                            : "outline"
+                        }
+                        className={
+                          lesson.status === "pending"
+                            ? "bg-chart-1 text-white"
+                            : ""
+                        }
                       >
                         {lesson.status}
                       </Badge>
@@ -464,7 +545,9 @@ export function AdminDashboard() {
                       <div className="flex gap-2">
                         <Button
                           size="sm"
-                          onClick={() => handleLessonAction(lesson.id, "approve")}
+                          onClick={() =>
+                            handleLessonAction(lesson.id, "approve")
+                          }
                           className="bg-chart-3 text-white"
                         >
                           <CheckCircle className="w-4 h-4 mr-2" />
@@ -473,7 +556,9 @@ export function AdminDashboard() {
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => handleLessonAction(lesson.id, "reject")}
+                          onClick={() =>
+                            handleLessonAction(lesson.id, "reject")
+                          }
                           className="text-destructive border-destructive"
                         >
                           <XCircle className="w-4 h-4 mr-2" />
@@ -557,27 +642,45 @@ export function AdminDashboard() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <Button variant="outline" className="h-auto p-4 flex flex-col items-center gap-2 bg-transparent">
+                <Button
+                  variant="outline"
+                  className="h-auto p-4 flex flex-col items-center gap-2 bg-transparent"
+                >
                   <Users className="w-6 h-6" />
                   <span>User Activity Report</span>
                 </Button>
-                <Button variant="outline" className="h-auto p-4 flex flex-col items-center gap-2 bg-transparent">
+                <Button
+                  variant="outline"
+                  className="h-auto p-4 flex flex-col items-center gap-2 bg-transparent"
+                >
                   <BookOpen className="w-6 h-6" />
                   <span>Content Performance</span>
                 </Button>
-                <Button variant="outline" className="h-auto p-4 flex flex-col items-center gap-2 bg-transparent">
+                <Button
+                  variant="outline"
+                  className="h-auto p-4 flex flex-col items-center gap-2 bg-transparent"
+                >
                   <TrendingUp className="w-6 h-6" />
                   <span>Engagement Analytics</span>
                 </Button>
-                <Button variant="outline" className="h-auto p-4 flex flex-col items-center gap-2 bg-transparent">
+                <Button
+                  variant="outline"
+                  className="h-auto p-4 flex flex-col items-center gap-2 bg-transparent"
+                >
                   <Zap className="w-6 h-6" />
                   <span>XP Distribution</span>
                 </Button>
-                <Button variant="outline" className="h-auto p-4 flex flex-col items-center gap-2 bg-transparent">
+                <Button
+                  variant="outline"
+                  className="h-auto p-4 flex flex-col items-center gap-2 bg-transparent"
+                >
                   <Flag className="w-6 h-6" />
                   <span>Moderation Summary</span>
                 </Button>
-                <Button variant="outline" className="h-auto p-4 flex flex-col items-center gap-2 bg-transparent">
+                <Button
+                  variant="outline"
+                  className="h-auto p-4 flex flex-col items-center gap-2 bg-transparent"
+                >
                   <AlertTriangle className="w-6 h-6" />
                   <span>Security Alerts</span>
                 </Button>
@@ -587,5 +690,5 @@ export function AdminDashboard() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }
