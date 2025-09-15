@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node build/api/index.js",
     "dev": "nodemon api/index.ts",
-    "build": "tsc -p .",
-    "deploy": "vercel --prod"
+    "deploy": "vercel --prod",
+    "login": "vercel login"
   },
   "keywords": [],
   "author": "",
@@ -24,7 +23,7 @@
     "mongoose": "^8.15.1",
     "node-cron": "^4.1.1",
     "nodemailer": "^7.0.3",
-    "vercel": "^41.0.2"
+    "vercel": "^41.7.8"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
