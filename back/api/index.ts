@@ -7,21 +7,23 @@ import { connectToDataBase } from "../src/database/connect-to-db";
 import userRouter from "../src/routes/user.route";
 
 const app = express();
-const port = 3001;
 
 app.use(cors());
 app.use(express.json());
+
+// Health check endpoint
+app.get("/", (req, res) => {
+  res.json({
+    status: "OK",
+    message: "Peer2Peer API is running",
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.use("/user", userRouter);
 
-async function startServer() {
-  try {
-    await connectToDataBase();
-    app.listen(port, () => {
-      console.log(`🚀 Server listening on port ${port}`);
-    });
-  } catch (error) {
-    console.error("Failed to start server:", error);
-  }
-}
+// Initialize database connection (non-blocking)
+connectToDataBase().catch(console.error);
 
-startServer();
+// Export the app for Vercel serverless functions
+export default app;
